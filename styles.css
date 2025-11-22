@@ -1,6 +1,12 @@
 :root{--bg:#f7f7fb;--card:#fff;--accent:#6c63ff}
 *{box-sizing:border-box}
-body{font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;background:var(--bg);margin:0;padding:20px;color:#222}
+body {
+  font-family: 'Baloo 2', cursive;
+  background: #e0f7ff; 
+  margin: 0;
+  padding: 20px;
+  color: #333;
+}
 .container{max-width:720px;margin:0 auto}
 .card{background:var(--card);padding:16px;border-radius:12px;box-shadow:0 6px 18px rgba(18,20,30,0.06);margin-bottom:16px}
 h1{margin:0 0 12px}
@@ -20,3 +26,115 @@ button.small{padding:6px 8px;font-size:13px}
 .badge.available{background:#effaf6;color:#166534}
 .badge.redeemed{background:#fff1f2;color:#9f1239}
 .small-btn{background:transparent;border:1px solid #ddd;padding:6px 8px;border-radius:8px;cursor:pointer}
+
+/* Grid layout: auto-adjusts to screen width */
+.coupon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 16px;
+  padding: 20px;
+}
+
+/* Individual coupon tile */
+.coupon-tile {
+  background: #fff0f5; /* soft pastel pink */
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+}
+
+/* Hover effect */
+.coupon-tile:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+}
+
+/* Title styling */
+.coupon-tile h3 {
+  font-size: 16px;
+  margin-bottom: 8px;
+  color: #ff69b4; /* pink-ish */
+  font-weight: 600;
+}
+
+/* Description styling */
+.coupon-tile p {
+  font-size: 13px;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+/* Expiry text */
+.coupon-tile .expiry-text {
+  font-size: 11px;
+  color: #888;
+  margin-bottom: 10px;
+}
+
+/* Redeem button */
+.coupon-tile button {
+  border: none;
+  padding: 8px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 13px;
+  background: #ffd1dc; /* soft pastel pink */
+  color: #fff;
+  font-weight: 600;
+  transition: 0.2s;
+  width: 100%;
+}
+
+/* Button hover */
+.coupon-tile button:hover:not(.redeemed) {
+  background: #ffb6c1;
+}
+
+/* Redeemed state */
+.coupon-tile button.redeemed {
+  background: #c0c0c0; /* gray */
+  cursor: default;
+}
+
+/* Optional: add cute border */
+.coupon-tile::before {
+  content: '';
+  position: absolute;
+  top: -8px; left: -8px; right: -8px; bottom: -8px;
+  border-radius: 20px;
+  border: 2px dashed #ffb6c1;
+  opacity: 0.3;
+}
+
+/* Responsive tweaks for small screens */
+@media (max-width: 500px) {
+  .coupon-tile {
+    padding: 12px;
+  }
+  .coupon-tile h3 {
+    font-size: 14px;
+  }
+  .coupon-tile p {
+    font-size: 12px;
+  }
+  .coupon-tile button {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+}
+.coupon-tile button.redeemed {
+  animation: pop 0.3s ease;
+}
+
+@keyframes pop {
+  0% { transform: scale(0.8); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}

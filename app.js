@@ -103,45 +103,49 @@ function startListeningCoupons(){
     .onSnapshot(snapshot => {
       couponListEl.innerHTML = '';
       snapshot.forEach(doc => {
-        const data = doc.data();
-        const li = document.createElement('li');
-        li.className = 'coupon';
-        const left = document.createElement('div'); left.className = 'left';
-        const title = document.createElement('div'); title.className = 'title'; title.textContent = data.title;
-        const desc = document.createElement('div'); desc.className = 'desc'; desc.textContent = data.desc || '';
-        const meta = document.createElement('div'); meta.className = 'meta';
-        const expiryText = data.expiry ? ('Expires: ' + data.expiry.toDate().toLocaleDateString()) : '';
-        meta.textContent = expiryText;
-        left.appendChild(title); left.appendChild(desc); left.appendChild(meta);
+  const data = doc.data();
 
-        const right = document.createElement('div');
-        const badge = document.createElement('span');
-        badge.className = 'badge ' + (data.redeemed ? 'redeemed' : 'available');
-        badge.textContent = data.redeemed ? 'Redeemed' : 'Available';
+  const tile = document.createElement('div');
+  tile.className = 'coupon-tile';
 
-        const btn = document.createElement('button');
-        btn.className = 'small-btn';
-        btn.textContent = data.redeemed ? 'Undo' : 'Redeem';
-        btn.onclick = async () => {
-          try{
-            await db.collection('coupons').doc(doc.id).update({
-              redeemed: !data.redeemed,
-              redeemedBy: !data.redeemed ? auth.currentUser.uid : null,
-              redeemedAt: !data.redeemed ? firebase.firestore.FieldValue.serverTimestamp() : null
-            });
-          }catch(e){
-            alert('Error updating: ' + e.message);
-          }
-        };
+  tile.innerHTML = `
+    <h3>${data.title}</h3>
+    <p>${data.desc || ''}</p>
+    <p class="expiry-text">${data.expiry ? 'Expires: ' + data.expiry.toDate().toLocaleDateString() : ''}</p>
+    <button class="${data.redeemed ? 'redeemed' : ''}">
+      ${data.redeemed ? 'Redeemed' : 'Redeem'}
+    </button>
+  `;
 
-        right.appendChild(badge);
-        right.appendChild(document.createTextNode(' '));
-        right.appendChild(btn);
+  const btn = tile.querySelector('button');
+  if (!data.redeemed) {
+    btn.addEventListener("click", async () => {
+      try {
+        await db.collection('coupons').doc(doc.id).update({
+          redeemed: true,
+          redeemedBy: auth.currentUser.uid,
+          redeemedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+      } catch(e){
+        alert('Error updating: ' + e.message);
+      }
+    });
+  } else {
+    btn.addEventListener("click", async () => {
+      try {
+        await db.collection('coupons').doc(doc.id).update({
+          redeemed: false,
+          redeemedBy: null,
+          redeemedAt: null
+        });
+      } catch(e){
+        alert('Error updating: ' + e.message);
+      }
+    });
+  }
 
-        li.appendChild(left);
-        li.appendChild(right);
-        couponListEl.appendChild(li);
-      });
+  couponListEl.appendChild(tile);
+});
     }, err => {
       console.error('listen error', err);
     });

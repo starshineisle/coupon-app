@@ -97,56 +97,83 @@ addCouponBtn.onclick = async () => {
   }
 };
 
-// Real-time listener for coupons (ordered by createdAt)
-function startListeningCoupons(){
-  couponsUnsub = db.collection('coupons').orderBy('createdAt','asc')
-    .onSnapshot(snapshot => {
-      couponListEl.innerHTML = '';
-      snapshot.forEach(doc => {
-  const data = doc.data();
+// --- TAB SWITCHING ---
+document.addEventListener("DOMContentLoaded", () => {
+  const tabButtons = document.querySelectorAll(".tab-button");
+  const tabPanels = document.querySelectorAll(".tab-panel");
 
-  const tile = document.createElement('div');
-  tile.className = 'coupon-tile';
+  tabButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const target = btn.dataset.tab;
 
-  tile.innerHTML = `
-    <h3>${data.title}</h3>
-    <p>${data.desc || ''}</p>
-    <p class="expiry-text">${data.expiry ? 'Expires: ' + data.expiry.toDate().toLocaleDateString() : ''}</p>
-    <button class="${data.redeemed ? 'redeemed' : ''}">
-      ${data.redeemed ? 'Redeemed' : 'Redeem'}
-    </button>
-  `;
+      // Switch button style
+      tabButtons.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
 
-  const btn = tile.querySelector('button');
-  if (!data.redeemed) {
-    btn.addEventListener("click", async () => {
-      try {
-        await db.collection('coupons').doc(doc.id).update({
-          redeemed: true,
-          redeemedBy: auth.currentUser.uid,
-          redeemedAt: firebase.firestore.FieldValue.serverTimestamp()
-        });
-      } catch(e){
-        alert('Error updating: ' + e.message);
-      }
+      // Switch content
+      tabPanels.forEach(panel => {
+        panel.classList.remove("active");
+        if (panel.id === "tab-" + target) panel.classList.add("active");
+      });
     });
-  } else {
-    btn.addEventListener("click", async () => {
-      try {
-        await db.collection('coupons').doc(doc.id).update({
-          redeemed: false,
-          redeemedBy: null,
-          redeemedAt: null
-        });
-      } catch(e){
-        alert('Error updating: ' + e.message);
-      }
-    });
-  }
-
-  couponListEl.appendChild(tile);
+  });
 });
-    }, err => {
-      console.error('listen error', err);
-    });
+
+
+// Real-time listener for coupons (ordered by createdAt)
+function startListeningCoupons() {
+  couponsUnsub = db.collection('coupons')
+    .orderBy('createdAt','asc')
+    .onSnapshot(snapshot => {
+      const availableEl = document.getElementById('available-coupons');
+      const redeemedEl = document.getElementById('redeemed-coupons');
+      availableEl.innerHTML = '';
+      redeemedEl.innerHTML = '';
+
+      snapshot.forEach(doc => {
+        const data = doc.data();
+
+        const tile = document.createElement('div');
+        tile.className = 'coupon-tile';
+
+        const expiryText = data.expiry ? 'Expires: ' + data.expiry.toDate().toLocaleDateString() : '';
+
+        // Redeemed date
+        const redeemedText = data.redeemedAt ? 'Used on: ' + data.redeemedAt.toDate().toLocaleDateString() : '';
+
+        tile.innerHTML = `
+          <h3>${data.title}</h3>
+          <p>${data.desc || ''}</p>
+          <p class="expiry-text">${expiryText}</p>
+          ${data.redeemed ? `<p class="redeemed-text">${redeemedText}</p>` : ''}
+          <button class="${data.redeemed ? 'redeemed' : ''}">
+            ${data.redeemed ? 'Redeemed' : 'Redeem'}
+          </button>
+        `;
+
+        const btn = tile.querySelector('button');
+
+        // Only clickable if not redeemed
+        if (!data.redeemed) {
+          btn.addEventListener('click', async () => {
+            try {
+              await db.collection('coupons').doc(doc.id).update({
+                redeemed: true,
+                redeemedBy: auth.currentUser.uid,
+                redeemedAt: firebase.firestore.FieldValue.serverTimestamp()
+              });
+            } catch(e) {
+              alert('Error updating: ' + e.message);
+            }
+          });
+        }
+
+        // Append to correct section
+        if (data.redeemed) {
+          redeemedEl.appendChild(tile);
+        } else {
+          availableEl.appendChild(tile);
+        }
+      });
+    }, err => console.error('listen error', err));
 }

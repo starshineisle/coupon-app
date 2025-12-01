@@ -8,85 +8,97 @@
   --pastel-pink: #ffd6e8;
   --pastel-yellow: #fff7c2;
   --pastel-blue: #b3e5ff;
+  --bright-pink: #ff69b4;
+  --muted-gray: #6b7280;
 }
 
 /* GLOBAL RESET */
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 /* 🌈 PASTEL GRADIENT BACKGROUND */
 body {
-  background: linear-gradient(
-    to bottom right,
-    #b3e5ff,
-    #ffd6e8,
-    #fff7c2
-  );
+  background: linear-gradient(to bottom right, #b3e5ff, #ffd6e8, #fff7c2);
   font-family: 'Poppins', sans-serif;
   margin: 0;
-  padding: 20px;
+  padding: 6px;
   min-height: 100vh;
 }
 
 /* CONTAINER */
 .container {
   max-width: 720px;
-  margin: 0 auto;
+  margin: 2px auto 0;
+}
+
+.header-content {
+  text-align: center;
+  margin-bottom: 8px;
 }
 
 /* ✨ TITLE WITH STAR ICONS + CUTE SCRIPT FONT */
 h1 {
   font-family: 'Pacifico', cursive;
-  font-size: 2.6rem;
-  text-align: center;
+  font-size: 2.3rem;
   color: #4d3b80;
-  margin-top: 10px;
-  margin-bottom: 25px;
+  text-align: center;
+  margin: 0 0 4px;
   position: relative;
+  padding-top: 10px;
 }
 
+/* stars above header */
 h1::before,
 h1::after {
   content: "⭐";
   position: absolute;
-  top: -10px;
-  font-size: 1.6rem;
+  top: -12px;
+  font-size: 1.3rem;
   opacity: 0.9;
 }
 
-h1::before { left: 20%; }
-h1::after { right: 20%; }
+h1::before { left: -6px; }
+h1::after { right: -6px; }
 
 /* CARDS */
 .card {
   background: var(--card);
-  padding: 16px;
-  border-radius: 16px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-  margin-bottom: 16px;
+  padding: 6px 10px;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  margin-bottom: 6px;
 }
 
 /* HEADINGS */
 h2 {
-  margin: 0 0 12px;
-  font-size: 20px;
+  margin: 0 0 4px;
+  font-size: 17px;
   color: #3b3b5c;
 }
 
 /* INPUTS */
 input {
   width: 100%;
-  padding: 10px;
-  border-radius: 10px;
+  padding: 6px;
+  border-radius: 8px;
   border: 1px solid #ddd;
-  margin: 8px 0;
-  font-size: 15px;
+  margin: 4px 0;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(108, 99, 255, 0.3);
 }
 
 /* BUTTONS */
 button {
-  padding: 10px 14px;
+  padding: 6px 10px;
   border-radius: 10px;
   border: none;
   background: var(--accent);
@@ -96,36 +108,45 @@ button {
   transition: 0.2s;
 }
 
-button:hover {
-  opacity: 0.85;
+button:hover { opacity: 0.85; }
+
+button:focus-visible {
+  outline: 2px solid var(--bright-pink);
+  outline-offset: 2px;
 }
 
 /* ROW */
-.row { display: flex; gap: 10px; }
+.row { display: flex; gap: 6px; }
 
 /* MUTED TEXT */
 .muted {
   color: #6b7280;
-  font-size: 14px;
+  font-size: 13px;
+}
+
+/* FOOTER */
+footer {
+  text-align: center;
+  margin-top: 12px;
 }
 
 /* TABS */
 .tabs {
   display: flex;
   justify-content: center;
-  gap: 12px;
-  margin-bottom: 16px;
+  gap: 4px;
+  margin-bottom: 2px; /* minimal */
 }
 
 .tab-button {
-  padding: 10px 20px;
-  border-radius: 20px;
+  padding: 6px 12px;
+  border-radius: 18px;
   background: white;
   color: #1e3a8a;
   font-weight: 600;
   cursor: pointer;
   border: none;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.12);
+  box-shadow: 0 3px 5px rgba(0,0,0,0.12);
   transition: 0.2s;
 }
 
@@ -134,84 +155,86 @@ button:hover {
   color: white;
 }
 
-.tab-panel { display: none; }
+.tab-panel { 
+  display: none; 
+  margin: 0;
+  padding: 0;
+}
+
 .tab-panel.active { display: block; }
 
 /* ⭐ COUPON GRID */
 .coupon-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
+  gap: 6px;
+  margin-top: 2px; /* minimal */
 }
 
 @media (max-width: 600px) {
-  .coupon-grid {
-    grid-template-columns: 1fr;
-  }
+  .coupon-grid { grid-template-columns: 1fr; }
 }
 
 /* ⭐ CUTE COUPON TILE */
 .coupon-tile {
   background: #ffffffcc;
   backdrop-filter: blur(4px);
-  border-radius: 16px;
-  padding: 16px;
-  box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+  border-radius: 14px;
+  padding: 6px;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.08);
   text-align: center;
   transition: 0.2s;
   position: relative;
 }
 
-/* floating star icon */
+/* Shooting star sparkle */
 .coupon-tile::before {
-  content: "💖";
+  content: "✨";
   position: absolute;
-  top: 8px;
-  right: 12px;
-  font-size: 1.3rem;
-  opacity: 0.8;
+  top: 4px;
+  right: 8px;
+  font-size: 1.1rem;
+  opacity: 0.9;
 }
 
 /* redeemed state */
-.coupon-tile.redeemed {
-  opacity: 0.55;
-}
+.coupon-tile.redeemed { opacity: 0.55; }
 
 /* hover animation */
 .coupon-tile:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.12);
 }
 
 /* Title inside coupon */
 .coupon-tile h3 {
-  font-size: 17px;
-  margin-bottom: 8px;
+  font-size: 15px;
+  margin-bottom: 3px;
   color: #ff69b4;
   font-weight: 600;
 }
 
 /* Description */
 .coupon-tile p {
-  font-size: 13px;
+  font-size: 12px;
   color: #555;
-  margin-bottom: 10px;
+  margin-bottom: 4px;
 }
 
 /* Expiry and redeemed info */
 .coupon-tile .expiry-text,
 .coupon-tile .redeemed-text {
-  font-size: 11px;
+  font-size: 10px;
   color: #777;
-  margin-bottom: 10px;
+  margin-bottom: 4px;
 }
 
-/* Redeem button */
+/* Redeem button — darker pastel */
 .coupon-tile button {
   width: 100%;
-  padding: 10px 14px;
-  border-radius: 12px;
-  background: #ffd1dc;
+  padding: 6px 10px;
+  border-radius: 10px;
+  background: #ff8fa3;
   color: white;
   font-weight: 600;
   border: none;
@@ -219,12 +242,10 @@ button:hover {
   transition: 0.2s;
 }
 
-/* Hover */
 .coupon-tile button:hover:not(.redeemed) {
-  background: #ffb6c1;
+  background: #ff6f8f;
 }
 
-/* Redeemed button state */
 .coupon-tile button.redeemed {
   background: #bfbfbf;
   cursor: default;
@@ -240,8 +261,45 @@ button:hover {
 
 /* Small screen adjustments */
 @media (max-width: 500px) {
-  .coupon-tile { padding: 12px; }
-  .coupon-tile h3 { font-size: 15px; }
+  .coupon-tile { padding: 6px; }
+  .coupon-tile h3 { font-size: 14px; }
   .coupon-tile p { font-size: 12px; }
   .coupon-tile button { font-size: 12px; }
+}
+
+/* 🌟 Collapsible Add Wish Section */
+.collapsible {
+  position: relative;
+  margin: 0;
+}
+
+.collapse-header {
+  display: flex;
+  justify-content: flex-start; 
+  align-items: center;
+  cursor: pointer;
+  padding: 4px 8px; 
+  gap: 2px; 
+}
+
+.collapse-header h2 {
+  margin: 0;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* + icon in front */
+.collapse-header .collapse-icon {
+  order: -1; /* move icon before text */
+  font-size: 20px;
+  color: #ff69b4;
+  transition: transform 0.2s ease;
+}
+
+/* Smooth reveal */
+@keyframes slideDown {
+  0% { opacity: 0; transform: translateY(-3px); }
+  100% { opacity: 1; transform: translateY(0); }
 }

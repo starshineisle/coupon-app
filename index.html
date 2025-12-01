@@ -1,64 +1,70 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Pocketful of Wishing Stars</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="stylesheet" href="styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <meta charset="utf-8">
+  <title>Pocketful of Wishing Stars</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
 
-  <!-- Firebase -->
-  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
 </head>
 <body>
-  <div class="container">
-    <h1>Pocketful of Wishing Stars</h1>
+  <div class="container">
+    <div class="header-content">
+      <h1>Pocketful of Wishing Stars</h1>
+    </div>
 
-    <div id="auth-area" class="card">
-      <h2>Sign In / Register</h2>
-      <input id="email" type="email" placeholder="Email">
-      <input id="password" type="password" placeholder="Password">
-      <div class="row">
-        <button id="signInBtn">Sign in</button>
-        <button id="registerBtn">Register</button>
-        <button id="signOutBtn" style="display:none">Sign out</button>
-      </div>
-      <p id="auth-msg" class="muted"></p>
-    </div>
+    <div id="auth-area" class="card">
+      <h2>Sign In / Register</h2>
+      <input id="email" type="email" placeholder="Email">
+      <input id="password" type="password" placeholder="Password">
+      <div class="row">
+        <button id="signInBtn">Sign in</button>
+        <button id="registerBtn">Register</button>
+      </div>
+      <p id="auth-msg" class="muted"></p>
+    </div>
 
-    <div id="app-area" style="display:none">
-      <div class="card">
-        <h2>Add a Wish</h2>
-        <input id="coupon-title" placeholder="Name Your Wish">
-        <input id="coupon-desc" placeholder="Description">
-        <input id="coupon-expiry" type="date" placeholder="Expiry (optional)">
-        <button id="addCouponBtn">Add Wish</button>
-      </div>
+    <div id="app-area" style="display:none">
+      <div class="card collapsible" id="addWishCard">
+        <div class="collapse-header" id="collapseToggle">
+          <h2>⭐ Add a Wish</h2>
+          <span class="collapse-icon" id="collapseIcon">＋</span>
+        </div>
 
-      <div class="card">
-  <div class="tabs">
-    <button class="tab-button active" data-tab="available">Available</button>
-    <button class="tab-button" data-tab="redeemed">Redeemed</button>
-  </div>
+        <div class="collapse-content" id="collapseContent">
+          <input id="coupon-title" placeholder="Name Your Wish">
+          <input id="coupon-desc" placeholder="Description">
+          <input id="coupon-expiry" type="date" placeholder="Expiry (optional)">
+          <button id="addCouponBtn">Add Wish</button>
+        </div>
+      </div>
 
-  <div id="tab-content">
-    <div id="tab-available" class="tab-panel active">
-      <div id="available-coupons" class="coupon-grid"></div>
-    </div>
+      <div class="card">
+        <div class="tabs">
+          <button class="tab-button active" data-tab="available">Available</button>
+          <button class="tab-button" data-tab="redeemed">Redeemed</button>
+        </div>
 
-    <div id="tab-redeemed" class="tab-panel">
-      <div id="redeemed-coupons" class="coupon-grid"></div>
-    </div>
-  </div>
-</div>
+        <div id="tab-content">
+          <div id="tab-available" class="tab-panel active">
+            <div id="available-coupons" class="coupon-grid"></div>
+          </div>
 
-    </div>
+          <div id="tab-redeemed" class="tab-panel">
+            <div id="redeemed-coupons" class="coupon-grid"></div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-    <footer class="muted">Both users need accounts. Redeem changes are real-time.</footer>
-  </div>
+    <footer class="muted">Both users need accounts. Redeem changes are real-time.</footer>
+  </div>
 
-  <script src="app.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>

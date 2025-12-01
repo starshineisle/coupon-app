@@ -1,305 +1,246 @@
 /* IMPORT FONTS */
 @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600&display=swap');
 
-/* ROOT THEME COLORS */
+/* ROOT COLORS */
 :root {
   --card: #ffffff;
   --accent: #6c63ff;
-  --pastel-pink: #ffd6e8;
-  --pastel-yellow: #fff7c2;
-  --pastel-blue: #b3e5ff;
+  --pastel-divider: #ffcce0;
+  --pastel-divider2: #b3e5ff;
+  --pastel-divider3: #fff7c2;
   --bright-pink: #ff69b4;
-  --muted-gray: #6b7280;
 }
 
-/* GLOBAL RESET */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+/* RESET */
+* { box-sizing:border-box; margin:0; padding:0; }
 
-/* 🌈 PASTEL GRADIENT BACKGROUND */
 body {
   background: linear-gradient(to bottom right, #b3e5ff, #ffd6e8, #fff7c2);
   font-family: 'Poppins', sans-serif;
-  margin: 0;
-  padding: 6px;
+  padding: 10px;
   min-height: 100vh;
 }
 
-/* CONTAINER */
-.container {
-  max-width: 720px;
-  margin: 2px auto 0;
+.container { 
+  max-width:720px; 
+  margin: 6px auto 0; 
 }
 
-.header-content {
-  text-align: center;
-  margin-bottom: 8px;
+/* HEADER */
+.header-content { 
+  margin-bottom: 20px !important; /* MORE spacing above Add a Wish */
 }
 
-/* ✨ TITLE WITH STAR ICONS + CUTE SCRIPT FONT */
 h1 {
-  font-family: 'Pacifico', cursive;
-  font-size: 2.3rem;
-  color: #4d3b80;
-  text-align: center;
-  margin: 0 0 4px;
-  position: relative;
-  padding-top: 10px;
+  font-family:'Pacifico',cursive;
+  font-size:2.3rem;
+  color:#4d3b80;
+  padding-top:8px;
+  margin-bottom:4px;
+  position:relative;
+  text-align:center;
 }
 
-/* stars above header */
-h1::before,
-h1::after {
-  content: "⭐";
-  position: absolute;
-  top: -12px;
-  font-size: 1.3rem;
-  opacity: 0.9;
+h1::before,h1::after {
+  content:"⭐";
+  position:absolute;
+  top:-6px;
+  font-size:1.3rem;
+  opacity:0.9;
 }
 
-h1::before { left: -6px; }
-h1::after { right: -6px; }
+h1::before { left:-6px; }
+h1::after { right:-6px; }
 
-/* CARDS */
+/* SECTION DIVIDERS */
+.section-divider {
+  width: 60%;
+  height: 4px;
+  margin: 14px auto;
+  background: linear-gradient(
+    to right,
+    var(--pastel-divider),
+    var(--pastel-divider2),
+    var(--pastel-divider3)
+  );
+  border-radius: 6px;
+  opacity: 0.7;
+}
+
+/* CARD WRAPPER */
 .card {
-  background: var(--card);
-  padding: 6px 10px;
-  border-radius: 14px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  margin-bottom: 6px;
+  background:var(--card);
+  padding:16px;
+  border-radius:14px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.08);
+  margin-bottom:18px !important; /* MORE spacing between major sections */
 }
 
-/* HEADINGS */
-h2 {
-  margin: 0 0 4px;
-  font-size: 17px;
-  color: #3b3b5c;
-}
-
-/* INPUTS */
+/* Inputs */
 input {
-  width: 100%;
-  padding: 6px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-  margin: 4px 0;
-  font-size: 14px;
-  transition: 0.2s;
+  width:100%;
+  padding:7px;
+  border:1px solid #ddd;
+  border-radius:8px;
+  margin:3px 0 !important;
+  font-size:14px;
 }
 
-input:focus {
-  outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 2px rgba(108, 99, 255, 0.3);
-}
-
-/* BUTTONS */
+/* Buttons */
 button {
-  padding: 6px 10px;
-  border-radius: 10px;
-  border: none;
-  background: var(--accent);
-  color: white;
-  cursor: pointer;
-  font-weight: 600;
-  transition: 0.2s;
+  padding:7px 12px;
+  border-radius:10px;
+  background:var(--accent);
+  color:white;
+  border:none;
+  font-weight:600;
+  cursor:pointer;
 }
 
-button:hover { opacity: 0.85; }
+.row { display:flex; gap:6px; }
 
-button:focus-visible {
-  outline: 2px solid var(--bright-pink);
-  outline-offset: 2px;
-}
-
-/* ROW */
-.row { display: flex; gap: 6px; }
-
-/* MUTED TEXT */
-.muted {
-  color: #6b7280;
-  font-size: 13px;
-}
-
-/* FOOTER */
-footer {
-  text-align: center;
-  margin-top: 12px;
-}
-
-/* TABS */
+/* Tabs */
 .tabs {
-  display: flex;
-  justify-content: center;
-  gap: 4px;
-  margin-bottom: 2px; /* minimal */
+  display:flex;
+  justify-content:center;
+  margin:8px 0 4px !important;
+  gap:6px;
 }
 
 .tab-button {
-  padding: 6px 12px;
-  border-radius: 18px;
-  background: white;
-  color: #1e3a8a;
-  font-weight: 600;
-  cursor: pointer;
-  border: none;
-  box-shadow: 0 3px 5px rgba(0,0,0,0.12);
-  transition: 0.2s;
+  padding:8px 20px !important;
+  border-radius:24px !important;
+  background:white;
+  color:#1e3a8a;
+  font-weight:600;
+  box-shadow:0 3px 5px rgba(0,0,0,0.12);
 }
 
 .tab-button.active {
-  background: #1e3a8a;
-  color: white;
+  background:#1e3a8a;
+  color:white;
 }
 
-.tab-panel { 
-  display: none; 
-  margin: 0;
-  padding: 0;
-}
+.tab-panel { display:none; }
+.tab-panel.active { display:block; }
 
-.tab-panel.active { display: block; }
-
-/* ⭐ COUPON GRID */
+/* Coupon Grid */
 .coupon-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 6px;
-  margin-top: 2px; /* minimal */
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px; /* more spacing between tiles */
+  margin-top:14px !important;
 }
 
-@media (max-width: 600px) {
-  .coupon-grid { grid-template-columns: 1fr; }
+@media(max-width:600px){
+  .coupon-grid { grid-template-columns:1fr; }
 }
 
-/* ⭐ CUTE COUPON TILE */
+/* Coupon Tile */
 .coupon-tile {
-  background: #ffffffcc;
-  backdrop-filter: blur(4px);
-  border-radius: 14px;
-  padding: 6px;
-  box-shadow: 0 5px 10px rgba(0,0,0,0.08);
-  text-align: center;
-  transition: 0.2s;
-  position: relative;
+  background:#ffffffcc;
+  border-radius:14px;
+  padding:10px;
+  text-align:center;
+  box-shadow:0 5px 10px rgba(0,0,0,0.08);
+  position:relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+
+  /* TILE EXPANSION ANIMATION */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Shooting star sparkle */
-.coupon-tile::before {
-  content: "✨";
-  position: absolute;
-  top: 4px;
-  right: 8px;
-  font-size: 1.1rem;
-  opacity: 0.9;
-}
-
-/* redeemed state */
-.coupon-tile.redeemed { opacity: 0.55; }
-
-/* hover animation */
 .coupon-tile:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(0,0,0,0.12);
+  transform: scale(1.03);
+  box-shadow:0 6px 14px rgba(0,0,0,0.12);
 }
 
-/* Title inside coupon */
+.coupon-tile::before {
+  content:"✨";
+  position:absolute;
+  top:4px;
+  right:8px;
+}
+
+.coupon-tile.redeemed { opacity:0.55; }
+
 .coupon-tile h3 {
-  font-size: 15px;
-  margin-bottom: 3px;
-  color: #ff69b4;
-  font-weight: 600;
+  font-size:15px;
+  color:#ff69b4;
+  margin-bottom:5px;
 }
 
-/* Description */
-.coupon-tile p {
-  font-size: 12px;
-  color: #555;
-  margin-bottom: 4px;
+.coupon-tile p { 
+  font-size:12px; 
+  margin-bottom:8px !important; /* More space before button */
 }
 
-/* Expiry and redeemed info */
-.coupon-tile .expiry-text,
-.coupon-tile .redeemed-text {
-  font-size: 10px;
-  color: #777;
-  margin-bottom: 4px;
+.expiry-text,
+.redeemed-text,
+.creator-text {
+  font-size:10px;
+  color:#777;
 }
 
-/* Redeem button — darker pastel */
+.creator-text { font-style:italic; }
+
+/* Redeem Button */
 .coupon-tile button {
   width: 100%;
-  padding: 6px 10px;
-  border-radius: 10px;
   background: #ff8fa3;
-  color: white;
-  font-weight: 600;
-  border: none;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.coupon-tile button:hover:not(.redeemed) {
-  background: #ff6f8f;
+  margin-top: auto !important; /* pushes button to bottom */
+  padding: 8px 12px;
+  border-radius: 10px;
 }
 
 .coupon-tile button.redeemed {
-  background: #bfbfbf;
-  cursor: default;
-  animation: pop 0.3s ease;
+  background:#bfbfbf;
 }
 
-/* cute pop animation */
-@keyframes pop {
-  0% { transform: scale(0.85); }
-  50% { transform: scale(1.2); }
-  100% { transform: scale(1); }
+/* Add Wish Section */
+.collapsible { 
+  margin:0;
+  border-radius:12px;
+  overflow:hidden;
 }
 
-/* Small screen adjustments */
-@media (max-width: 500px) {
-  .coupon-tile { padding: 6px; }
-  .coupon-tile h3 { font-size: 14px; }
-  .coupon-tile p { font-size: 12px; }
-  .coupon-tile button { font-size: 12px; }
-}
-
-/* 🌟 Collapsible Add Wish Section */
-.collapsible {
-  position: relative;
-  margin: 0;
-}
-
+/* COLLAPSED HEADER SHOULD BE NARROWER */
 .collapse-header {
-  display: flex;
-  justify-content: flex-start; 
-  align-items: center;
-  cursor: pointer;
-  padding: 4px 8px; 
-  gap: 2px; 
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+  gap:6px;
+
+  padding:8px 12px !important;
+  cursor:pointer;
+
+  width: 80% !important;        /* narrower collapsed segment */
+  margin: 0 auto !important;    /* centered */
+  border-radius: 10px;
+
+  background: #fff0fa;          /* pastel hint */
+  box-shadow:0 3px 8px rgba(0,0,0,0.07);
 }
 
-.collapse-header h2 {
-  margin: 0;
-  font-size: 16px;
-  display: flex;
-  align-items: center;
-  gap: 4px;
+.collapse-icon {
+  font-size:20px;
+  color:#ff69b4;
 }
 
-/* + icon in front */
-.collapse-header .collapse-icon {
-  order: -1; /* move icon before text */
-  font-size: 20px;
-  color: #ff69b4;
-  transition: transform 0.2s ease;
+#collapseContent {
+  padding-top:12px;
+  animation: fadeSlide 0.3s ease;
 }
 
-/* Smooth reveal */
-@keyframes slideDown {
-  0% { opacity: 0; transform: translateY(-3px); }
-  100% { opacity: 1; transform: translateY(0); }
+/* Content reveal animation */
+@keyframes fadeSlide {
+  from { opacity:0; transform:translateY(-5px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
+#addCouponBtn {
+  width:100%;
+  margin-top:10px !important;
 }

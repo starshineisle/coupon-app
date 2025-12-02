@@ -29,18 +29,16 @@ const expiryInput = document.getElementById("coupon-expiry");
 
 let couponsUnsub = null;
 
-const formatTimestamp = ts =>
-  ts && typeof ts.toDate === "function" ? ts.toDate().toLocaleDateString() : "";
+const formatTimestamp = (ts) => {
+  if (!ts || typeof ts.toDate !== "function") return "";
 
-// SIGN IN
-signInBtn.onclick = async () => {
-  const email = emailInput.value.trim();
-  const pass = passInput.value.trim();
+  const d = ts.toDate();
+  const day = String(d.getDate()).padStart(2, "0");
+  const month = String(d.getMonth() + 1).padStart(2, "0");
+  const year = d.getFullYear();
 
-  if (!email || !pass) {
-    authMsg.textContent = "Provide email & password";
-    return;
-  }
+  return `${day}/${month}/${year}`;
+};
 
   try {
     await auth.signInWithEmailAndPassword(email, pass);

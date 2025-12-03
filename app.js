@@ -29,38 +29,33 @@ const expiryInput = document.getElementById("coupon-expiry");
 
 let couponsUnsub = null;
 
+// Format timestamp
 const formatTimestamp = (ts) => {
   if (!ts || typeof ts.toDate !== "function") return "";
-
   const d = ts.toDate();
   const day = String(d.getDate()).padStart(2, "0");
   const month = String(d.getMonth() + 1).padStart(2, "0");
   const year = d.getFullYear();
-
   return `${day}/${month}/${year}`;
 };
-document.getElementById("signInBtn").addEventListener("click", signIn);
+
+// --- SIGN IN ---
+signInBtn.addEventListener("click", signIn);
 
 function signIn() {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
+  const email = emailInput.value.trim();
+  const password = passInput.value.trim();
 
   auth.signInWithEmailAndPassword(email, password)
-    .then(() => {
-      console.log("Signed in!");
-    })
     .catch((error) => {
-      alert(error.message);
+      authMsg.textContent = error.message;
     });
 }
 
 // AUTH STATE LISTENER
 auth.onAuthStateChanged(user => {
   if (user) {
-    const allowedEmails = [
-      "dtly@wd40.com",
-      "lwx@wd40.com"
-    ];
+    const allowedEmails = ["dtly@wd40.com", "lwx@wd40.com"];
 
     if (!allowedEmails.includes(user.email)) {
       authMsg.textContent = "Access denied. This account is not allowed.";
@@ -83,7 +78,7 @@ auth.onAuthStateChanged(user => {
   }
 });
 
-// ADD COUPON
+// --- ADD COUPON ---
 addCouponBtn.addEventListener("click", async () => {
   const title = titleInput.value.trim();
   const desc = descInput.value.trim();
@@ -101,7 +96,7 @@ addCouponBtn.addEventListener("click", async () => {
       expiry: expiry ? new Date(expiry) : null,
       redeemed: false,
       creator: user.uid,
-      creatorEmail: user.email, // NEW
+      creatorEmail: user.email,
       createdAt: firebase.firestore.FieldValue.serverTimestamp()
     });
 
@@ -114,8 +109,9 @@ addCouponBtn.addEventListener("click", async () => {
   }
 });
 
-// UI: Tabs + Collapse
+// --- UI: TABS + COLLAPSE ---
 document.addEventListener("DOMContentLoaded", () => {
+  // Tabs
   const tabButtons = document.querySelectorAll(".tab-button");
   const tabPanels = document.querySelectorAll(".tab-panel");
 
@@ -133,6 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  // Collapsible add wish
   const collapseToggle = document.getElementById("collapseToggle");
   const collapseContent = document.getElementById("collapseContent");
   const collapseIcon = document.getElementById("collapseIcon");
@@ -147,7 +144,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 });
 
-// REAL-TIME FIRESTORE LISTENER
+// --- REAL-TIME LISTENER ---
 function startListeningCoupons() {
   if (couponsUnsub) couponsUnsub();
 
@@ -171,28 +168,24 @@ function startListeningCoupons() {
           ? `Used on: ${formatTimestamp(data.redeemedAt)}`
           : "";
 
-        const creatorText = data.creatorEmail
-            ? `Wish by: ${data.creatorEmail}`
-            : "";
-// Extract only the name before "@"
-const creatorName = data.creatorEmail
-  ? data.creatorEmail.split("@")[0]
-  : "";
-
+        const creatorName = data.creatorEmail
+          ? data.creatorEmail.split("@")[0]
+          : "";
 
         const tile = document.createElement("div");
         tile.className = data.redeemed ? "coupon-tile redeemed" : "coupon-tile";
 
-       tile.innerHTML = `
-        <h3>${data.title}</h3>
-        <p>${data.desc || "No description provided."}</p>
-        <p class="expiry-text">${expiryText}</p>
-         <p class="creator-text">${creatorName}</p>
-         ${data.redeemed ? `<p class="redeemed-text">${redeemedText}</p>` : ""}
-        <button class="${data.redeemed ? "redeemed" : ""}">
-          ${data.redeemed ? "Redeemed" : "Redeem"}
-         </button>
-`;
+        tile.innerHTML = `
+          <h3>${data.title}</h3>
+          <p>${data.desc || "No description provided."}</p>
+          <p class="expiry-text">${expiryText}</p>
+          <p class="creator-text">${creatorName}</p>
+          ${data.redeemed ? `<p class="redeemed-text">${redeemedText}</p>` : ""}
+          <button class="${data.redeemed ? "redeemed" : ""}">
+            ${data.redeemed ? "Redeemed" : "Redeem"}
+          </button>
+        `;
+
         const btn = tile.querySelector("button");
 
         if (!data.redeemed) {

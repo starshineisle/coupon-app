@@ -39,15 +39,7 @@ const formatTimestamp = (ts) => {
 
   return `${day}/${month}/${year}`;
 };
-
-  try {
-    await auth.signInWithEmailAndPassword(email, pass);
-    authMsg.textContent = "Signed in";
-  } catch (e) {
-    authMsg.textContent = e.message;
-  }
-
-  document.getElementById("signInBtn").addEventListener("click", signIn);
+document.getElementById("signInBtn").addEventListener("click", signIn);
 
 function signIn() {
   const email = document.getElementById("email").value;

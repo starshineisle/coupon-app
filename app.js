@@ -46,7 +46,21 @@ const formatTimestamp = (ts) => {
   } catch (e) {
     authMsg.textContent = e.message;
   }
-};
+
+  document.getElementById("signInBtn").addEventListener("click", signIn);
+
+function signIn() {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  auth.signInWithEmailAndPassword(email, password)
+    .then(() => {
+      console.log("Signed in!");
+    })
+    .catch((error) => {
+      alert(error.message);
+    });
+}
 
 // AUTH STATE LISTENER
 auth.onAuthStateChanged(user => {
